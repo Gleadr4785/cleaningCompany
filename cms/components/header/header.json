@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_header_headers",
+  "info": {
+    "name": "header",
+    "icon": "grimace"
+  },
+  "options": {},
+  "attributes": {
+    "smallTitle": {
+      "type": "string"
+    },
+    "mainTitle": {
+      "type": "string"
+    }
+  }
+}

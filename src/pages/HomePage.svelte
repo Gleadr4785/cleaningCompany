@@ -10,7 +10,6 @@
     //importing axios for request to cms (strapi)
     import axios from "axios";
     import { onMount } from "svelte";
-    import App from "../App.svelte";
 
     let urlHomePage = "http://localhost:1337/home-page";
     let content;
@@ -19,7 +18,6 @@
         try {
             const res = await axios.get(urlHomePage);
             content = res.data;
-            console.log(content)
         } catch (e) {
             error = e;
         }
@@ -32,10 +30,10 @@
         <Menu />
         <div class="text-center pt-24 md:pt-48">
             <span
-                class="text-lightBlue text-2xl lg:text-3xl ">{content.Header.smallTitle}</span>
+                class="text-lightBlue text-2xl lg:text-3xl ">{content.header.smallTitle}</span>
             <h1
                 class=" text-4xl lg:text-7xl font-black text-white leading-none mb-10">
-                {content.Header.mainTitle}
+                {content.header.mainTitle}
             </h1>
             <div class="space-x-4">
                 <Button
@@ -167,8 +165,8 @@
         <section class="text-center md:text-left ">
             <About
                 title="About us"
-                text={content.About_Us.text}
-                titleText={content.About_Us.title} />
+                text={content.aboutUs.aboutUsText}
+                titleText={content.aboutUs.aboutUsTitle} />
         </section>
         <section>
             <Booking />
@@ -176,8 +174,8 @@
     </main>
     <footer class="mt-24  md:px-16 px-6 lg:px-36 mb-4" id="contact">
         <Footer
-            mail={content.Footer.mail}
-            telNumber={content.Footer.telNumber}
-            address={content.Footer.address} />
+            mail={content.footer.email}
+            telNumber={content.footer.telNumber}
+            address={content.footer.address} />
     </footer>
 {/if}

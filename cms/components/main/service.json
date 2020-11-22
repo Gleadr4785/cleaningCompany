@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_main_services",
+  "info": {
+    "name": "service",
+    "icon": "grin"
+  },
+  "options": {},
+  "attributes": {
+    "serviceTitle": {
+      "type": "string"
+    },
+    "serviceDescription": {
+      "type": "richtext"
+    },
+    "icon": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    }
+  }
+}

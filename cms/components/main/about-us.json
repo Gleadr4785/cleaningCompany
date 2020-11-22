@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_main_aboutuses",
+  "info": {
+    "name": "aboutUs",
+    "icon": "grin-alt"
+  },
+  "options": {},
+  "attributes": {
+    "aboutUsTitle": {
+      "type": "string"
+    },
+    "aboutUsText": {
+      "type": "richtext"
+    },
+    "img": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    }
+  }
+}
