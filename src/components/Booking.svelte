@@ -1,10 +1,20 @@
 <script>
     import Button from "./Button.svelte";
+    import Select from "svelte-select";
+
+    let items = ["stadart", "premium", "whatever"];
+
+    let reservation = {
+        type: "standart",
+        bedrooms: 0,
+        bathrooms: 0,
+    };
 </script>
 
 <div class="md:grid md:grid-cols-2 gap-x-6 space-y-6 md:space-y-0">
-    <div class="bg-darkBlue py-10 px-8 rounded-3xl shadow-darkBlue">
-        <div class="text-center text-white">
+    <div
+        class="bg-darkBlue py-10 px-8 md:px-12 lg:px-16 rounded-3xl shadow-darkBlue">
+        <div class="text-center md:text-left text-white">
             <h2 class="text-4xl font-medium">Book online</h2>
             <p class="text-xl">
                 Save your time and Money with online booking and flat your rate
@@ -54,7 +64,15 @@
                     <p class="font-medium text-xl text-white">
                         Type of cleanig
                     </p>
-                    <div class="grid grid-cols-2">
+                    <div class="text-xl text-yellow">
+                        <Select
+                            showIndicator={true}
+                            isSearchable={false}
+                            {items}
+                            bind:selectedValue={reservation.type}
+                            isClearable={false}
+                            containerClasses={'bg-darkBlue'} />
+                        <!--   
                         <span
                             class="text-orange text-black text-xl">Standart</span>
 
@@ -72,6 +90,7 @@
                                 d="M18 15l-6-6l-6 6h12"
                                 transform="rotate(180 12 12)" />
                         </svg>
+                    -->
                     </div>
                 </div>
             </div>
@@ -130,8 +149,9 @@
                 </div>
                 <div class=" w-full border-b-2 border-lightBlue space-y-2">
                     <p class="font-medium text-xl text-white">Bedrooms</p>
-                    <div>
+                    <div class="space-x-2">
                         <svg
+                            on:click={() => reservation.bedrooms++}
                             xmlns="http://www.w3.org/2000/svg"
                             class="inline-block w-8 cursor-pointer"
                             viewBox="0 0 24 24"
@@ -145,8 +165,11 @@
                             <line x1="9" y1="12" x2="15" y2="12" />
                             <line x1="12" y1="9" x2="12" y2="15" />
                         </svg>
-                        <span class="text-white font-black">2</span>
+                        <span class="text-white">{reservation.bedrooms}</span>
                         <svg
+                            on:click={() => {
+                                if (reservation.bedrooms > 0) reservation.bedrooms--;
+                            }}
                             xmlns="http://www.w3.org/2000/svg"
                             class="inline-block w-8 cursor-pointer"
                             viewBox="0 0 24 24"
@@ -312,8 +335,9 @@
                 </div>
                 <div class=" w-full border-b-2 border-lightBlue space-y-2">
                     <p class="font-medium text-xl text-white">Bathrooms</p>
-                    <div>
+                    <div class="space-x-2">
                         <svg
+                            on:click={() => reservation.bathrooms++}
                             xmlns="http://www.w3.org/2000/svg"
                             class="inline-block w-8 cursor-pointer"
                             viewBox="0 0 24 24"
@@ -327,8 +351,11 @@
                             <line x1="9" y1="12" x2="15" y2="12" />
                             <line x1="12" y1="9" x2="12" y2="15" />
                         </svg>
-                        <span class="text-white font-black">2</span>
+                        <span class="text-white">{reservation.bathrooms}</span>
                         <svg
+                            on:click={() => {
+                                if (reservation.bathrooms > 0) reservation.bathrooms--;
+                            }}
                             xmlns="http://www.w3.org/2000/svg"
                             class="inline-block w-8 cursor-pointer"
                             viewBox="0 0 24 24"
@@ -453,102 +480,33 @@
                         </g>
                     </svg>
                 </div>
-                <div class="w-full grid grid-cols-2 place-content-end">
-                    <span class="font-medium text-white text-xl">
-                        May 2020
-                    </span>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="rounded-full border-2 border-lightBlue w-8 inline-block justify-self-end cursor-pointer"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="#FFFFFF"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path
-                            d="M18 15l-6-6l-6 6h12"
-                            transform="rotate(180 12 12)" />
-                    </svg>
-                </div>
-            </div>
-            <div
-                class="p-4 border-lightBlue border-4 rounded-3xl gap-x-4 grid grid-cols-7 justify-items-center text-center text-white font-medium">
-                <div class="cursor-pointer">
-                    <p>2</p>
-                    <p>SUN</p>
-                </div>
-                <div class="cursor-pointer">
-                    <p>2</p>
-                    <p>SUN</p>
-                </div>
-                <div class="cursor-pointer">
-                    <p>2</p>
-                    <p>SUN</p>
-                </div>
-                <div class="cursor-pointer">
-                    <p>2</p>
-                    <p>SUN</p>
-                </div>
-                <div class="cursor-pointer">
-                    <p>2</p>
-                    <p>SUN</p>
-                </div>
-                <div class="cursor-pointer">
-                    <p>2</p>
-                    <p>SUN</p>
-                </div>
-                <div class="cursor-pointer">
-                    <p>2</p>
-                    <p>SUN</p>
-                </div>
-            </div>
-            <div
-                class="p-4 border-lightBlue border-4 rounded-3xl grid grid-cols-5 md:grid-cols-7  justify-items-center text-center text-white font-medium">
-                <div class="cursor-pointer">
-                    <p>12:00</p>
-                </div>
-                <div class="cursor-pointer">
-                    <p>12:00</p>
-                </div>
-                <div class="cursor-pointer">
-                    <p>12:00</p>
-                </div>
-                <div class="cursor-pointer">
-                    <p>12:00</p>
-                </div>
-                <div class="cursor-pointer">
-                    <p>12:00</p>
-                </div>
-                <div class="cursor-pointer hidden sm:block">
-                    <p>12:00</p>
-                </div>
-                <div class="cursor-pointer hidden sm:block">
-                    <p>12:00</p>
+                <div class="w-full">
+                    <p class="font-medium text-white text-xl">May 2020</p>
                 </div>
             </div>
         </div>
     </div>
     <div>
-        <div class="bg-blue py-10 px-14 rounded-3xl shadow-blue lg:w-9/12">
+        <div
+            class="bg-blue py-10 px-8 md:px-12 lg:px-16 rounded-3xl shadow-blue">
             <div class="leading-none text-center md:text-left">
                 <p class="text-white text-2xl">Subtotal</p>
                 <p class="text-white font-medium text-7xl">91€</p>
             </div>
             <div class="grid grid-rows-5 text-white text-xl space-y-4">
                 <div class="border-b-2 border-lightBlue mt-4 p-2 pl-0">
-                    <span>Standart</span>
+                    <span>{reservation.type.value}</span>
                 </div>
                 <div
                     class="border-b-2 border-lightBlue p-2 pl-0 grid grid-cols-2">
                     <span>Bedrooms</span>
-                    <span class="justify-self-end">2</span>
+                    <span class="justify-self-end">{reservation.bedrooms}</span>
                 </div>
                 <div
                     class="border-b-2 border-lightBlue p-2 pl-0 grid grid-cols-2">
                     <span>Bathrooms</span>
-                    <span class="justify-self-end">2</span>
+                    <span
+                        class="justify-self-end">{reservation.bathrooms}</span>
                 </div>
                 <div
                     class="border-b-2 border-lightBlue p-2 pl-0 grid grid-cols-2">

@@ -12,7 +12,7 @@
         <img
             src="build/assets/about.png"
             alt=""
-            class="mb-8 sm:object-none object-center" />
+            class="mb-8 sm:object-cover object-center" />
     </div>
     <div class="md:py-4">
         <h2

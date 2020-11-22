@@ -1,3 +1,9 @@
+<script>
+    export let mail;
+    export let telNumber;
+    export let address;
+</script>
+
 <h2 class="text-4xl text-darkBlue font-black mb-6 text-center md:text-left">
     Contact
 </h2>
@@ -17,7 +23,7 @@
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path
                     d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
-            </svg><span class="md:ml-4 ml-2">+421 145 123 123</span>
+            </svg><span class="md:ml-4 ml-2">{telNumber}</span>
         </div>
         <div>
             <svg
@@ -32,7 +38,7 @@
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <rect x="3" y="5" width="18" height="14" rx="2" />
                 <polyline points="3 7 12 13 21 7" />
-            </svg><span class="ml-3">janko.mrvka@gmail.com</span>
+            </svg><span class="ml-3">{mail}</span>
         </div>
         <div>
             <svg
@@ -48,7 +54,7 @@
                 <circle cx="12" cy="11" r="3" />
                 <path
                     d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
-            </svg><span class="md:ml-4 ml-2">+421 145 123 123</span>
+            </svg><span class="md:ml-4 ml-2">{address}</span>
         </div>
     </div>
     <div

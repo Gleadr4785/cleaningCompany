@@ -3,7 +3,7 @@
 /** This script modifies the project to support TS code in .svelte files like:
 
   <script lang="ts">
-  	export let name: string;
+    export let name: string;
   </script>
  
   As well as validating the code for CI.
@@ -27,7 +27,8 @@ packageJSON.devDependencies = Object.assign(packageJSON.devDependencies, {
   "@rollup/plugin-typescript": "^6.0.0",
   "typescript": "^3.9.3",
   "tslib": "^2.0.0",
-  "@tsconfig/svelte": "^1.0.0"
+  "@tsconfig/svelte": "^1.0.0",
+
 })
 
 // Add script for checking
@@ -69,7 +70,7 @@ let match
 
 // https://regex101.com/r/OtNjwo/1
 const configEditor = new RegExp(/css:.|\n*}/gmi)
-while (( match = configEditor.exec(rollupConfig)) != null) {
+while ((match = configEditor.exec(rollupConfig)) != null) {
   if (foundCSS) {
     const endOfCSSIndex = match.index + 1
     rollupConfig = rollupConfig.slice(0, endOfCSSIndex) + ",\n			preprocess: sveltePreprocess()," + rollupConfig.slice(endOfCSSIndex);
@@ -93,7 +94,7 @@ const tsconfig = `{
   "include": ["src/**/*"],
   "exclude": ["node_modules/*", "__sapper__/*", "public/*"]
 }`
-const tsconfigPath =  path.join(projectRoot, "tsconfig.json")
+const tsconfigPath = path.join(projectRoot, "tsconfig.json")
 fs.writeFileSync(tsconfigPath, tsconfig)
 
 // Delete this script, but not during testing
