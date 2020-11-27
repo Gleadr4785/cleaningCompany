@@ -1,14 +1,91 @@
 <script>
     import Button from "./Button.svelte";
     import Select from "svelte-select";
+    import DatePicker from "praecox-datepicker";
+    import { onMount } from "svelte";
+    import axios from "axios";
 
     let items = ["stadart", "premium", "whatever"];
-
+    $: freeTimes = [];
+    let showDatePicker = false;
+    let pickerDone = false;
     let reservation = {
         type: "standart",
         bedrooms: 0,
         bathrooms: 0,
+        pickedTime: "",
+        pickedDate: "",
     };
+
+    let day = new Date();
+    day.setTime(day.getTime() - 24 * 60 * 60 * 1000);
+    let yesterday =
+        day.getFullYear() + "-" + (day.getMonth() + 1) + "-" + day.getDate();
+    let disabled = ["1930-1-1", "2020-11-24"];
+
+    onMount(() => {
+        disabled = ["1930-1-1", yesterday];
+    });
+    let selected = "";
+
+    $: if (selected) {
+        reservation.pickedDate = new Date(selected);
+    } else {
+        reservation.pickedDate = new Date();
+    }
+
+    function showPicker() {
+        showDatePicker = !showDatePicker;
+    }
+    function getResult() {
+        if (reservation.pickedDate.length == 0) {
+            return;
+        }
+        if (pickerDone) {
+            showDatePicker = false;
+        }
+    }
+    function getFreeTimes(time) {
+        let day1 = new Date();
+        let today = Date.parse(
+            day1.getFullYear() +
+                "-" +
+                (day1.getMonth() + 1) +
+                "-" +
+                day1.getDate()
+        );
+        let today_from_calendar = Date.parse(
+            time.getFullYear() +
+                "-" +
+                (time.getMonth() + 1) +
+                "-" +
+                time.getDate()
+        );
+        if (today !== today_from_calendar) {
+            axios
+                .get(
+                    "http://localhost:1337/bookings?bookedDate=" +
+                        time.toISOString()
+                )
+                .then((response) => {
+                    let bookedTimes = response.data[0].bookedTimes;
+                    let availableTimes = response.data[0].availableTimes;
+
+                    freeTimes = availableTimes.filter((item) => {
+                        return bookedTimes.some((booked) => {
+                            return booked.Time !== item.Time;
+                        });
+                    });
+                })
+                .catch((error) => {
+                    freeTimes = [];
+                });
+        } else {
+            freeTimes = [];
+        }
+    }
+
+    $: getFreeTimes(reservation.pickedDate);
 </script>
 
 <div class="md:grid md:grid-cols-2 gap-x-6 space-y-6 md:space-y-0">
@@ -72,25 +149,6 @@
                             bind:selectedValue={reservation.type}
                             isClearable={false}
                             containerClasses={'bg-darkBlue'} />
-                        <!--   
-                        <span
-                            class="text-orange text-black text-xl">Standart</span>
-
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="rounded-full border-2 border-lightBlue w-8 inline-block justify-self-end cursor-pointer"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="#FFFFFF"
-                            fill="none"
-                            stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path
-                                d="M18 15l-6-6l-6 6h12"
-                                transform="rotate(180 12 12)" />
-                        </svg>
-                    -->
                     </div>
                 </div>
             </div>
@@ -372,7 +430,7 @@
                 </div>
             </div>
             <div class="flex">
-                <div class="mr-11">
+                <div class="mr-11 hidden sm:block">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="80.004"
@@ -480,8 +538,62 @@
                         </g>
                     </svg>
                 </div>
-                <div class="w-full">
-                    <p class="font-medium text-white text-xl">May 2020</p>
+                <div class=" mx-auto">
+                    <div
+                        on:click={showPicker}
+                        class:hidden={showDatePicker}
+                        class="px-8 py-3 lg:px-8 lg:py-4 rounded-3xl text-white text-xl bg-lightBlue cursor-pointer">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="inline-block w-7 relative -top-0.5"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="#FFFFFF"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <rect x="4" y="5" width="16" height="16" rx="2" />
+                            <line x1="16" y1="3" x2="16" y2="7" />
+                            <line x1="8" y1="3" x2="8" y2="7" />
+                            <line x1="4" y1="11" x2="20" y2="11" />
+                            <line x1="11" y1="15" x2="12" y2="15" />
+                            <line x1="12" y1="15" x2="12" y2="18" />
+                        </svg><span class="ml-2">Pick a date</span>
+                    </div>
+
+                    {#if showDatePicker}
+                        <div on:click={getResult} class="shadow-darkBlue">
+                            <DatePicker
+                                bind:selected
+                                bind:pickerDone
+                                {disabled} />
+                        </div>
+                    {/if}
+                    <div>
+                        {#if showDatePicker}
+                            {#if selected}
+                                <div class="flex space-x-2 mt-2">
+                                    {#each freeTimes as time}
+                                        <div
+                                            on:click={() => (reservation.pickedTime = time.Time)}
+                                            class="px-4 py-2 bg-white text-orange text-xl inline-block rounded-xl text-center cursor-pointer shadow-darkBlue">
+                                            <span>{time.Time.substr(0, 5)}</span>
+                                        </div>
+                                    {/each}
+                                </div>
+
+                                {#if freeTimes.length === 0}
+                                    <div class="mt-2">
+                                        <p
+                                            class="text-orange px-4 py-2 bg-white text-xl rounded-xl">
+                                            Booking not opened
+                                        </p>
+                                    </div>
+                                {/if}
+                            {/if}
+                        {/if}
+                    </div>
                 </div>
             </div>
         </div>
@@ -493,7 +605,7 @@
                 <p class="text-white text-2xl">Subtotal</p>
                 <p class="text-white font-medium text-7xl">91€</p>
             </div>
-            <div class="grid grid-rows-5 text-white text-xl space-y-4">
+            <div class="grid grid-rows-6 text-white text-xl space-y-4">
                 <div class="border-b-2 border-lightBlue mt-4 p-2 pl-0">
                     <span>{reservation.type.value}</span>
                 </div>
@@ -511,7 +623,15 @@
                 <div
                     class="border-b-2 border-lightBlue p-2 pl-0 grid grid-cols-2">
                     <span>Date</span>
-                    <span class="justify-self-end">12 May 2020</span>
+                    <span
+                        class="justify-self-end">{reservation.pickedDate.toDateString()}
+                    </span>
+                </div>
+                <div
+                    class="border-b-2 border-lightBlue p-2 pl-0 grid grid-cols-2">
+                    <span>Time</span>
+                    <span class="justify-self-end">
+                        {reservation.pickedTime.substr(0, 5)}</span>
                 </div>
             </div>
             <div>

@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_date_date_times",
+  "info": {
+    "name": "dateTime",
+    "icon": "calendar",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "bookingDate": {
+      "type": "date"
+    },
+    "bookingTime": {
+      "type": "component",
+      "repeatable": true,
+      "component": "date.booking-time"
+    }
+  }
+}

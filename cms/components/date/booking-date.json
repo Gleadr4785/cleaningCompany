@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_date_booking_dates",
+  "info": {
+    "name": "bookingDate",
+    "icon": "calendar-alt"
+  },
+  "options": {},
+  "attributes": {}
+}

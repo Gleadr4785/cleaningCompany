@@ -2,7 +2,7 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/home-page",
+      "path": "/home",
       "handler": "home-page.find",
       "config": {
         "policies": []
@@ -10,7 +10,7 @@
     },
     {
       "method": "PUT",
-      "path": "/home-page",
+      "path": "/home",
       "handler": "home-page.update",
       "config": {
         "policies": []
@@ -18,7 +18,7 @@
     },
     {
       "method": "DELETE",
-      "path": "/home-page",
+      "path": "/home",
       "handler": "home-page.delete",
       "config": {
         "policies": []

@@ -7,14 +7,35 @@
 	import router from "page";
 
 	let page;
+	let pageContent;
+	let content;
 	let params;
 
-	router("/", () => (page = HomePage));
-	router("/booking", () => (page = BookingPage));
-	router("/services", () => (page = ServicesPage));
-	router("/prices", () => (page = PricesPage));
-
+	router("/", () => ((page = HomePage), (pageContent = "home")));
+	router("/booking", () => ((page = BookingPage), (pageContent = "booking")));
+	router(
+		"/services",
+		() => ((page = ServicesPage), (pageContent = "services"))
+	);
+	router("/prices", () => ((page = PricesPage), (pageContent = "prices")));
 	router.start();
+
+	//importing axios for request to cms (strapi)
+	import axios from "axios";
+	import { onMount } from "svelte";
+
+	let urlHomePage = "http://localhost:1337/" + pageContent;
+
+	onMount(async () => {
+		try {
+			const res = await axios.get(urlHomePage);
+			content = res.data;
+		} catch (e) {
+			error = e;
+		}
+	});
 </script>
 
-<svelte:component this={page} {params} />
+{#if content}
+	<svelte:component this={page} {content} />
+{/if}

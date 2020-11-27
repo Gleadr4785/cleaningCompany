@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_date_booking_times",
+  "info": {
+    "name": "bookingTime",
+    "icon": "circle"
+  },
+  "options": {},
+  "attributes": {
+    "Time": {
+      "type": "time"
+    }
+  }
+}

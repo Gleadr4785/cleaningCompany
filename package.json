@@ -26,6 +26,7 @@
     "axios": "^0.21.0",
     "page": "^1.11.6",
     "postcss": "^8.1.8",
+    "praecox-datepicker": "^1.0.4",
     "sirv-cli": "^1.0.0",
     "svelte-select": "^3.14.1",
     "tailwindcss": "^2.0.1"

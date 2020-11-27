@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_date_time_bookings",
+  "info": {
+    "name": "timeBooking",
+    "icon": "clock"
+  },
+  "options": {},
+  "attributes": {}
+}
